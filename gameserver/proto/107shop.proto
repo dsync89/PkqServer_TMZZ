@@ -1,0 +1,143 @@
+//模块=shop
+//编号=10700
+
+
+// =================商店协议系统说明==========================
+//
+// 购买道具之前，必须先请求购买次数限制
+// 
+// 由于前端预判的需要，不允许同时有两个商品在请求购买，所以sc_shop_bug返回协议中没有携带请求信息。
+// 
+// ==========================================================
+
+
+// 获取所有特殊商品已购买次数
+message cs_shop_buy_num[id=10701]{
+}
+
+message sc_shop_buy_num[id=10702]{
+	repeated	p_shop_num		shopNumList			=1;//已购买次数列表
+}
+
+// 已购买次数信息
+message p_shop_num[id=10703]{
+	required	int16			shopID				=1;//商店ID
+	required	int16			sellID				=2;//商品ID
+	required	int16			buyNum				=3;//已购买次数
+}
+
+// 购买道具
+message cs_shop_buy[id=10704]{
+	required	int16			shopID				=1;//商店ID
+	required	int16			sellID				=2;//商品ID
+	required	int8			num					=3;//购买数量
+}
+
+message	sc_shop_buy[id=10705]{
+	required	int8			result				=1;//结果
+	// 1=> 成功
+	// 2=> 元宝不足
+	// 3=> 银两不足
+	// 4=> 声望不足
+	// 5=> 积分不足
+	// 6=> 其他货币不足
+	// 7=> vip等级不足
+	// 8=> 购买次数超过上限
+	// 9=> 你不拥有此奇遇商店
+}
+
+
+// 获取奇遇商店信息
+message cs_shop_encounter[id=10710]{
+}
+
+message sc_shop_encounter[id=10711]{
+	repeated		p_shop_random		shopList		=1;//奇遇商店列表
+}
+
+message	p_shop_random[id=10712]{
+	required		int16				shopID			=1;//商店ID
+	required		int32				refreshSec		=2;//UnixTime，下次刷新的时间
+	repeated		int16				sellIDList		=2;//随机出来的商品列表
+}
+
+// 新增一个奇遇商店
+message sc_shop_new[id=10713]{
+	required		p_shop_random		newShop			=1;//新增的奇遇商店信息
+}
+
+// 请求刷新奇遇商店
+message	cs_shop_refresh[id=10720]{
+	required		int16				shopID			=1;//商店ID
+}
+
+message	sc_shop_refresh[id=10721]{
+	required		int8				result			=1;//请求结果
+	// 1=> 成功
+	// 2=> 失败-元宝不足
+	// 3=> 失败-未知错误	
+	repeated		p_shop_random		newShop			=2;//新的商店
+}
+
+// 通知前端，自动刷新了
+message	sc_shop_auto_refresh[id=10730]{
+	required		p_shop_random		updateShop		=1;//刷新了的商店
+}
+
+// 获取精灵宝库商店信息
+message cs_shop_treasure_info[id=10731]{
+
+}
+
+message sc_shop_treasure_info[id=10732]{
+    required        string              activityName            = 1;
+    required        int32               activityEndTime         = 2;
+    required        int8                mul                     = 3;
+    required        int16               discounts               = 4;
+    required        int32               nextRefreshTime         = 5;
+    repeated        p_treasure          list                    = 6;
+}
+
+message p_treasure[id=10733]{
+    required        int8                type                    = 1;//类型 1：物品 2：卡牌
+    required        int16               typeID                  = 2;//模板ID
+    required        int32               num                     = 3;//数量
+    required        int8                costType                = 4;//单价消耗类型 1：钻石 2：金币 3：声望
+    required        int32               costVal                 = 5;//单价消耗数量
+    required        bool                isBuy                   = 6;//是否购买过
+    required        int8                index                   = 7;//位置索引
+}
+
+message cs_shop_treasure_buy[id=10734]{
+    required        int8                index                   = 1;
+}
+
+message sc_shop_treasure_buy[id=10735]{
+    required        int8                result                  = 1;//0成功，1商品不存在，2已经购买过，3金币不足，4钻石不足，5声望不足
+    required        int8                index                   = 2;
+}
+
+message sc_shop_treasure_new_activity[id=10736]{
+    required        string              activityName            = 1;
+    required        int32               activityEndTime         = 2;
+    required        int8                mul                     = 3;
+    required        int16               discounts               = 4;
+}
+
+message sc_shop_treasure_new_shop[id=10737]{
+    required        int32               nextRefreshTime         = 1;
+    repeated        p_treasure          list                    = 2;
+}
+
+message cs_shop_refresh2[id=10738]{
+
+}
+
+message sc_shop_refresh2[id=10739]{
+    required        int8                result                  = 1;//0成功，1宝石不足
+    repeated        p_treasure          list                    = 2;
+}
+
+
+
+

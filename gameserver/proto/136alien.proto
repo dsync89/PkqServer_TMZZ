@@ -1,0 +1,286 @@
+// 136
+// 异星战场
+
+message cs_alien_info[id=13601]{
+
+}
+
+message sc_alien_info[id=13602]{
+    required            bool                isOpen              = 1;
+    required            int32               endTimestamp        = 2;
+    required            int8                groupID             = 3;
+    required            bool                isSign              = 4;
+    required            int8                leftTimes           = 5;
+    repeated            p_alien_fighter     fighterList         = 6;
+    required            int32               resetTime           = 7;
+    required            int16               resetNeedGold       = 8;
+    required            int8                maxTimes            = 9;
+    required            int8                price               = 10;
+}
+
+message sc_alien_sign_info[id=13603]{
+    required            int8                needVipLevel        = 1;
+    required            int16               needLevel           = 2;
+    required            bool                isSign              = 3;
+    required            int32               signEndTimestamp    = 4;
+}
+
+message cs_alien_first_five[id=13604,route=alien_server]{
+    
+}
+
+message sc_alien_first_five[id=13605]{
+    repeated        p_alien_fighter     fighterList         = 1;
+}
+
+message p_alien_fighter[id=13606]{
+    required        int32           roleID              = 1;//角色ID
+    required        int64           fightPower          = 2;//战斗力
+    required        bool            isMale              = 3;//性别
+    required        int8            title               = 4;//称号
+    required        int32           head                = 5;//头像
+    required        int16           level               = 6;//等级
+    required        string          roleName            = 7;//名字
+    required        int32           rank                = 8;//排名
+    required        int16           serverID            = 9;//服务器ID
+    required        int8            hpPercent           = 10;//hp百分比
+    required        int32           canBeAtkTime        = 11;//目标可被挑战的时间戳
+}
+
+message cs_alien_kill_num_rank[id=13607,route=alien_server]{
+    required        int8            start               = 1;
+    required        int8            num                 = 2;
+}
+
+message sc_alien_kill_num_rank[id=13608]{
+    repeated        p_alien_fighter2    fighterList     = 1;
+}
+
+message p_alien_fighter2[id=13609]{
+    required        int32           roleID              = 1;//角色ID
+    required        int64           fightPower          = 2;//战斗力
+    required        bool            isMale              = 3;//性别
+    required        int8            title               = 4;//称号
+    required        int32           head                = 5;//头像
+    required        int16           level               = 6;//等级
+    required        string          roleName            = 7;//名字
+    required        int32           rank                = 8;//排名
+    required        int16           serverID            = 9;//服务器ID
+    required        int16           killNum             = 10;//击杀数量
+}
+
+message cs_alien_kill_continuous_rank[id=13610,route=alien_server]{
+    required        int8            start           = 1;
+    required        int8            num             = 2;
+}
+
+message sc_alien_kill_continuous_rank[id=13611]{
+    repeated        p_alien_fighter3    fighterList     = 1;    
+}
+
+message p_alien_fighter3[id=13612]{
+    required        int32           roleID              = 1;//角色ID
+    required        int64           fightPower          = 2;//战斗力
+    required        bool            isMale              = 3;//性别
+    required        int8            title               = 4;//称号
+    required        int32           head                = 5;//头像
+    required        int16           level               = 6;//等级
+    required        string          roleName            = 7;//名字
+    required        int32           rank                = 8;//排名
+    required        int16           serverID            = 9;//服务器ID
+    required        int16           killContinuousNum   = 10;//击杀数量
+    required        bool            isInContinuous      = 11;//是否处于连胜状态
+}
+
+message cs_alien_guess_info[id=13613,route=alien_server]{
+
+}
+
+message sc_alien_guess_info[id=13614]{
+    required        int32            guessCoin             = 1;
+    required        bool             guessType             = 2;//false猜奇，true猜偶
+    required        int32            guessOddNum           = 3;
+    required        int32            guessEvenNum          = 4;
+    repeated        int32            coinValList           = 5;
+}
+
+message cs_alien_guess[id=13615]{
+    required        int32           guessCoin              = 1;
+    required        bool            guessType              = 2;//false猜奇，true猜偶
+}
+
+message sc_alien_guess[id=13616]{
+    required        int8            result                  = 1;//0成功，1参数错误，2金币不够，3活动未开启，4不在竞猜时间内,5已参与竞猜
+}
+
+message cs_alien_reset[id=13617]{
+
+}
+
+message sc_alien_reset[id=13618]{
+    required        int8                result                  = 1;//0成功，1砖石不足,2活动未开启,3未参战,4冷却时间中
+    required        int32               timestamp               = 2;//可使用战术重置的时间戳
+    repeated        p_alien_fighter     fighterList             = 3;
+}
+
+message cs_alien_fight[id=13619]{
+    required        int32           tarRoleID               = 1;
+    required        int16           tarRank                 = 2;
+}
+
+message sc_alien_fight[id=13620]{
+    required    int8                result          =1;//请求结果
+    // 1=> 成功发起挑战
+    // 2=> 发起挑战失败，对方的排位已经变化，请重新获取对手列表,服务器立即主动推送一次
+    // 3=> 发起挑战失败，挑战次数不足
+    // 4=> 发起挑战失败，点的太快了，上一次战斗还在计算中
+    // 5=> 发起挑战失败，该玩家正在被别的玩家挑战中
+    // 6=> 发起挑战失败，不能挑战自己
+    // 7=> 发起挑战失败，消耗砖石挑战，砖石不足
+    // 8=> 发起挑战失败，挑战玩家不存在
+    // 9=> 发起挑战失败，等级不足
+    // 10=> 发起挑战失败，vip等级不足
+    // 11=> 发起挑战失败，不在可挑战的活动状态
+    // 12=> 发起挑战失败，系统错误
+    // 13=> 发起挑战失败，未参加报名
+    // 14=> 发起挑战失败，不在同一个战场
+    // 15=> 发起挑战失败，挑战玩家不在自己可挑战的排名范围
+    // 16=> 发起挑战失败，你在冷却时间内
+    // 17=> 发起挑战失败，目标在冷却时间内
+    repeated    sc_fight_request    fightInfo       =2;//战斗结果
+    required    int16               newRank         =3;//如果挑战胜利，此字段表示我的新排名
+    required    int32               addCoin         =4;
+    repeated    p_alien_fighter     fighterList     =5;
+}
+
+message cs_alien_sign[id=13621]{
+
+}
+
+message sc_alien_sign[id=13622]{
+    required        int8            result          = 1;//0表示成功，1等级不足，2vip不足，3不在报名时间内,4已报名
+}
+
+message cs_alien_self_record[id=13623,route=alien_server]{
+    required        int8            start           = 1;
+    required        int8            num             = 2;
+}
+
+message sc_alien_self_record[id=13624]{
+    repeated        p_alien_self_record     recordList         = 1;
+}
+
+message cs_alien_record[id=13625,route=alien_server]{
+    required        int8            start            = 1;
+    required        int8            num              = 2;
+}
+
+message sc_alien_record[id=13626]{
+    repeated        p_alien_record          recordList  = 1;
+}
+
+message p_alien_self_record[id=13627]{
+    required        bool            isAtk               = 1;//是否进攻
+    required        bool            isWin               = 2;
+    required        string          enemyName           = 3;
+    required        int16           newRank             = 4;
+    required        int64           replayUID           = 5;
+    required        int32           timestamp           = 6;
+}
+
+message p_alien_record[id=13628]{
+    required        int8            type                = 1;//0连胜战报，1终结战报
+    required        string          atkName             = 2;
+    required        string          defName             = 3;
+    required        int16           continuousCount     = 4;
+    required        int16           killCount           = 5;
+    required        int64           replayUID           = 6;
+    required        int32           timestamp           = 7;
+}
+
+message sc_alien_update_times[id=13629]{
+    required        int8            leftTimes           = 1;
+    required        int32           timestamp           = 2;
+}
+
+message cs_alien_self_fight_replay[id=13630,route=alien_server]{
+    required        int64           replayUID           = 1;
+}
+
+message sc_alien_self_fight_replay[id=13631]{
+    required        sc_fight_request    fightInfoList   = 1;
+}
+
+message cs_alien_fight_replay[id=13632,route=alien_server]{
+    required        int64           replayUID           = 1;
+}
+
+message sc_alien_fight_repaly[id=13633]{
+    required        sc_fight_request    fightInfoList   = 1;
+}
+
+message sc_alien_new_fighter_list[id=13634]{
+    repeated            p_alien_fighter     fighterList         = 1;    
+}
+
+message cs_alien_leave[id=13635,route=alien_server]{
+
+}
+
+message sc_alien_new_self_record[id=13636]{
+
+}
+
+//查看对方阵容
+message     cs_alien_view_other[id=13637,route=alien_server]{
+    required    int32               tarRoleID       =1;//要查看阵容的目标玩家
+}
+
+message     sc_alien_view_other[id=13638]{
+    required    int32               tarRoleID1       =1;//目标玩家ID
+    required    string              roleName1        =2;//玩家名字
+    required    int16               roleLevel1       =3;//玩家等级
+    required    int64               fightPower1      =4;//玩家总战斗力
+    repeated    p_ger_view          gerList1         =5;//武将列表
+    
+    required    int32               tarRoleID2       =6;//目标玩家ID
+    required    string              roleName2        =7;//玩家名字
+    required    int16               roleLevel2       =8;//玩家等级
+    required    int64               fightPower2      =9;//玩家总战斗力
+    repeated    p_ger_view          gerList2         =10;//武将列表
+}
+
+message     cs_alien_view_other_dtl[id=13639,route=alien_server]{
+    required    int32               tarRoleID       =1;//目标玩家ID
+}
+
+
+message cs_alien_buy_times[id=13640]{
+    required    int8                buyTimes        =1;
+}
+
+message sc_alien_buy_times[id=13641]{
+    required    int8                result          =1;//0成功，1砖石不足，2功能未开放，3次数超过存储上限
+    required    int8                newTimes        =2;
+}
+
+message cs_alien_active[id=13642,route=alien_server]{
+}
+
+message sc_alien_active[id=13643]{
+    required    int8                status          =1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

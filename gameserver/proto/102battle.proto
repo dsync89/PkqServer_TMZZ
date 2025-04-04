@@ -1,0 +1,136 @@
+//模块=battle
+//编号=10200
+
+// 获取当前进度
+message cs_battle_progress[id=10201]{
+}
+
+message sc_battle_progress[id=10202]{
+	repeated	p_battle_progress	bpList			=1;
+	repeated	int16	bestPassChapterID	=2;//已经完美通关的章节列表
+}
+
+//获取某个章节所有关卡信息
+message cs_battle_info[id=10203]{
+	required	int8			type					=1;//1:普通关卡   2:困难关卡  3:最困难关卡
+	required	int16		chapterID		=2;//请求的章节ID，为0时，表示请求当前章节
+}
+
+message sc_battle_info[id=10204]{
+	required	int8			type					=1;//1:普通关卡   2:困难关卡  3:最困难关卡
+	required	int16		chapterID		=2;//章节ID
+	required	bool		perfectRewarded	=3;//是否领取过完美通关奖励
+	repeated	p_dungeon	dungeonInfo		=4;//每个关卡的信息
+	required	int16			dungeonCount	=4;//章节总关卡
+}
+
+
+// 当个关卡信息的数据结构
+message	p_dungeon[id=10205]{
+	required	int16		dungeonID		=1;//关卡唯一ID
+	required	int16		restTimes		=2;//剩余挑战次数
+	required	int8		bestScore		=3;//历史最佳通关评级：0=未通关，1..N=通关评级
+}
+
+// 挑战关卡
+message cs_battle_challenge[id=10206]{
+	required	int8			type					=1;//1:普通关卡   2:困难关卡  3:最困难关卡
+	required	int16		dungeonID		=2;//要挑战的关卡ID
+}
+
+message sc_battle_challenge[id=10207]{
+	required	int8		result			=1;//请求是否成功
+	// 1=> 请求成功
+	// 2=> 请求不允许，挑战次数已用完
+	// 3=> 请求不允许，体力不足
+	// 4=> 请求不允许，该关卡未激活
+	// 5=> 参数错误
+	repeated	sc_fight_request	fightInfo	=2;//战斗的结果
+	repeated	p_reward			reward		=3;//战斗奖励
+	required	int8				score		=4;//星级评价
+}
+
+// 领取完美通关奖励
+message cs_battle_perfect_reward[id=10208]{
+	required	int16		chapterID		=1;//目标章节
+}
+
+message sc_battle_perfect_reward[id=10209]{
+	required	int8		result			=1;//领取结果
+	// 1=> 成功
+	// 2=> 失败，不能再次领取
+	// 3=> 失败，未完美通关
+}
+
+// PVP结算信息
+message	p_reward[id=10210]{
+	required		int32			coin		=1;//奖励的银两
+	required		int32			roleExp		=2;//奖励的玩家经验
+	repeated		p_ger_add_exp	gerExpList	=3;//奖励的武将经验
+	required 		int32			gold		=4;//奖励的元宝
+	repeated		p_item_view		itemList	=5;//奖励的道具
+	repeated		p_ger_view		gerList		=6;//奖励的武将
+	required        int32           reputation  =7;//声望
+}
+
+// 武将加经验
+message p_ger_add_exp[id=10211]{
+	required		int8			gerPos		=1;//武将站位
+	required		int32			addExp		=2;//武将实际增加的经验
+	required		bool			isUpgraded	=3;//是否升级
+}
+
+// 获得装备进行世界公告
+message sc_battle_broadcast_get_item[id=10212]{
+	required		string			roleName	=1;//武将名字
+	required		int32			itemTypeID	=2;//获得装备类型id
+	required		int8			num			=3;//获得装备数量
+	required		int16			dungeonID	=4;//关卡id
+	required		int16			chapterID	=5;//章节id
+}
+
+message	cs_battle_dungeon_raids[id=10214]{
+	required		int16			dungeonID	=1;//扫荡的dungeonID
+}
+
+message	sc_battle_dungeon_raids[id=10215]{
+	required		int8			result		=1;
+	// 1 => 扫荡成功
+	// 2 => 体力不足
+	// 3 => 扫荡次数不足
+	// 4 => 该关卡没完成3星通过
+	// 5 => 该关卡未解锁
+	// 6 => 等级不足
+	// 7 => vip等级不足
+	required		int8			raidsTimes	=2;//扫荡次数
+	repeated	p_reward			reward		=2;//战斗奖励
+}
+
+message p_battle_progress[id=10216]{
+	required	int8				type				=1;// 1:普通关卡   2:困难关卡  3:最困难关卡
+	required	int16			dungeonID	            =2;//关卡
+	required	int16			chapterID	            =3;//章节
+	required	int16			dungeonCount	        =4;//章节总关卡
+}
+
+message cs_battle_coin_info[id=10217]{
+
+}
+
+message sc_battle_coin_info[id=10218]{
+    required    int16               times               =1;//已挑战次数
+    required    int32               coolDown            =2;//冷却时间
+}
+
+message cs_battle_coin_fight[id=10219]{
+    required    int8                type                =1;//难度类型，1简单，2普通，3困难
+}
+
+message sc_battle_coin_fight[id=10220]{
+    required    int8                result              =1;//0 ok，1次数不足，2冷却时间中，3等级不足
+    required    int32               coolDown            =2;//冷却时间
+    required    bool                isWin               =3;//是否胜利
+    required    int32               coin                =4;//获得金币
+    repeated    sc_fight_request    fightInfo           =5;//战斗的回放
+}
+

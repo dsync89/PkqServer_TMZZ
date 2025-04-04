@@ -1,0 +1,64 @@
+
+message cs_festival_info[id=13901,route=festival_server]{
+    required        int32                   id                      = 1;
+}
+
+message sc_festival_info[id=13902]{
+    required        int32                   id                      = 1;
+    required        int32                   startTimestamp          = 1;//开始时间戳
+    required        int32                   stopTimestamp           = 2;//结束时间戳
+    required        int32                   totalCount              = 3;//累计次数
+    required        int32                   totalGetCount           = 4;//当前可领取累计次数奖励，为0表示无奖励
+    required        int32                   freeCount               = 5;//免费次数
+    required        int16                   nextTotalCount          = 6;//得到累计次数奖励需要次数
+    required        int16                   price                   = 7;
+    required        int16                   tenPrice                = 8;
+    required        string                  info                    = 9;
+    repeated        p_festival_rank_reward  rewardList              = 10;//排行榜奖励信息
+}
+
+message cs_festival_click[id=13903]{
+    required        int32                   id                      = 1;
+    required        int8            clickType               = 1;//点击类型，0单次，1十次,2累计次数宝箱
+}
+
+message sc_festival_click[id=13904]{
+    required        int32                   id                      = 1;
+    required        int8            clickType               = 1;//点击类型，0单次，1十次,2累计次数宝箱
+    required        int8            result                  = 2;//0成功，1系统错误， 2活动已关闭，3 元宝不足， 4无累计次数奖励可领取,5无此累计次数宝箱
+    required        int16           nextTotalCount          = 3;//新的得到累计次数奖励需要次数，为0表示不更新当前累计次数显示
+    required        int32           totalCount              = 4;//累计次数
+    required        int32           totalGetCount           = 5;//当前可领取累计次数奖励，为0表示无奖励
+    required        int32           freeCount               = 6;//免费次数
+    repeated        p_mail_reward   clickReward             = 7;//本次点击得到的奖励,单次一个数组元素，十次则十个数组元素
+}
+
+message cs_festival_rank[id=13905,route=festival_server]{
+    required        int32                   id                      = 1;
+    required        int16           start                   = 1;//排名起始位置
+    required        int16           num                     = 2;//请求多少个
+}
+
+message sc_festival_rank[id=13906]{
+    required        int32                   id                      = 1;
+    required        int8                    minRankCount            = 1;//上榜需要次数
+    required        int16                   selfRank                = 2;//自己的排名，没上榜为0
+    repeated        p_festival_rank         rankList                = 3;//排行榜数组
+}
+
+message p_festival_rank[id=13907]{
+    required        int32           roleID                = 1;//角色ID
+    required        bool            isMale                = 3;//性别
+    required        int8            title                 = 4;//称号
+    required        int32           head                  = 5;//头像
+    required        int16           level                 = 6;//等级
+    required        string          roleName              = 7;//名字
+    required        int32           totalCount            = 8;//参与总次数
+    required        int16           rank                  = 9;//排名
+}
+
+message p_festival_rank_reward[id=13908]{
+    required        int16           rankStart             = 1;//排名区间起始位置
+    required        int16           rankEnd               = 2;//排名区间结束位置
+    required        p_mail_reward   reward                = 3;//排名在该区间内的奖励
+}

@@ -1,0 +1,26 @@
+message cs_rank_info[id=13701]{
+    required    int8                    rankType            = 1;// 1:等级榜, 2:战斗力榜, 3:pvp榜, 4:关卡榜
+    required    int8                    type                = 2;// 1:普通关卡 2:困难关卡 3:最困难关卡
+    required    int8                    start               = 3;// 从第几名开始请求
+    required    int8                    num                 = 4;// 请求多少个
+}
+
+message sc_rank_info[id=13702]{
+    required    int8                    rankType            = 1;// 1:等级榜, 2:战斗力榜, 3:pvp榜, 4:关卡榜
+    required    int8                    type                = 2;// 1:普通关卡   2:困难关卡  3:最困难关卡
+    repeated    p_rank_info             list                = 3;// 排行榜数据
+}
+
+message p_rank_info[id=13703]{
+    required        int8            rank            = 1;
+    required        int32           roleID          = 2;
+    required        int16           level           = 3;
+    required        string          name            = 4;
+    required        int32           head            = 5;
+    required        int8            title           = 6;
+    required        bool            isMale          = 7;
+    required        int64           fightPower      = 8;
+    required        int16           chapterID       = 9;
+    required        string          dungeonName     = 10;
+}
+

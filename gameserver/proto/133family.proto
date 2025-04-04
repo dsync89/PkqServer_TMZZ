@@ -1,0 +1,175 @@
+
+message p_family_info[id=13301]{ 
+    required            int32                    family_id           =1;//联盟ID
+    required            string                  family_name         =2;//联盟名称
+    required            int16                   level               =3;//联盟等级
+    required            int32                   create_role_id      =4;//创建者roleID
+    required            string                  create_role_name    =5;//创建者名称
+    required            int32                   owner_role_id       =6;//盟主roleID
+    required            string                  owner_role_name     =7;//盟主名称
+    required            int16                   cur_members         =8;//当前成员数量
+    required            int32                   active_points       =9;//联盟建设值
+    required            string                  notice              =10;//公告
+    repeated            p_family_member_info    members             =11;//联盟成员信息列表
+    required            int32                   rank                =12;//联盟排名
+    required            int32                   create_time         =13;//创建联盟的时间戳
+}
+
+message p_family_member_info[id=13302]{ 
+    required            int32                   role_id                     =1;//角色ID
+    required            string                  role_name                   =2;//角色名字
+    required            int32                   family_contribution         =3;//个人贡献
+    required            int32                   left_family_contribution    =4;//剩余贡献
+    required            int32                   use_gold_time               =5;//元宝贡献时间戳
+    required            int8                    title                       =6;//角色称号
+    required            bool                    is_male                     =7;//角色性别
+    required            bool                    online                      =8;//角色是否在线
+    required            int16                   role_level                  =9;//角色等级
+    required            int64                   fight_power                 =10;//战斗力
+    required            int8                    family_title                =11;//联盟官职
+}
+
+
+message p_family_request[id=13303]{
+    required            int32                   role_id                     =1;//角色ID
+    required            string                  role_name                   =2;//角色名字
+    required            int16                   level                       =3;//角色等级
+    required            int64                   fight_power                 =4;//战斗力
+    required            int32                   timestamp                   =5;//申请时间戳
+    required            int32                   family_id                   =6;//申请的联盟ID
+}
+
+message p_family_summary[id=13304]{ 
+    required            int32                   family_id                   =1;//联盟ID
+    required            string                  family_name                 =2;//联盟名字
+    required            string                  owner_role_name             =3;//盟主名字
+    required            int16                   cur_members                 =4;//当前人数
+    required            int16                   level                       =5;//联盟等级
+    required            int32                   rank                        =6;//联盟排名
+    required            string                  notice                      =7;//联盟公告
+    required            bool                    is_request                  =8;//是否申请加入
+    required            int32                   owner_role_id               =9;//盟主roleID
+}
+
+message cs_family_get_list[id=13305,route=family_manager_server]{
+    required            int16                   start                       =1;//起始位置
+    required            int16                   num                         =2;//获取多少个
+}
+
+message sc_family_get_list[id=13306]{
+    required            int8                    result                      =1;//返回结果，成功为0,参数start+1超过联盟总数返回1
+    repeated            p_family_summary        family_list                 =2;//返回的联盟信息列表
+}
+
+message cs_family_create[id=13307]{
+    required            string                  family_name                 =1;//联盟名称
+    required            bool                    is_gold_create              =2;//消耗元宝还是银两创建
+}
+
+message sc_family_create[id=13308]{
+    required            int8                    result                      =1;//返回结果，成功为0,1联盟名字有非法字符，2联盟名字超过长度，3有同名联盟，4等级不够，5已有联盟，6元宝不足，7银两不足，8系统错误,9保护时间内,10正在处理上一条请求
+    required            p_family_info           family_info                 =2;//联盟信息
+    required            int32                   timestamp                   =3;//保护结束时间
+}
+
+message cs_family_request_join[id=13309]{
+    required            int32                   family_id                   =1;//请求加入的联盟ID
+}
+
+message sc_family_request_join[id=13310]{
+    required            int8                    result                      =1;//成功返回0,1已有联盟，2等级不足，3没有此联盟，4联盟人数已满，5已经请求，6你的请求数量超过上限，7联盟的请求数量超过上限，8在保护时间内
+    required            bool                    is_self                     =2;//是否返回给自己
+    required            int32                   timestamp                   =3;//保护结束时间
+}
+
+message cs_family_cancel_join[id=13311]{
+    required            int32                   family_id                   =1;//联盟ID
+}
+
+message sc_family_cancel_join[id=13312]{
+    required            int8                    result                      =1;//成功返回0,1没有请求
+    required            bool                    is_self                     =2;//是否返回给自己
+}
+
+message cs_family_agree_join[id=13313]{
+    required            int32                   role_id                     =1;//角色ID
+}
+
+message sc_family_agree_join[id=13314]{
+    required            int8                    result                      =1;//成功返回0,1你没有联盟，2没有此玩家的请求，3你不是盟主，4超过人数上限，5此玩家已进入你的联盟，6系统错误，7此玩家已经加入其他联盟，8在保护时间内,9正在处理上一条请求
+    required            bool                    is_self                     =2;//是否返回给自己
+    required            p_family_info           family_info                 =3;//加入成员后新的family_info
+}
+
+message cs_family_refuse_join[id=13315]{
+    required            int32                   role_id                     =1;//角色ID,角色ID为0表示拒绝全部
+}
+
+message sc_family_refuse_join[id=13316]{
+    required            int8                    result                      =1;//成功返回0,1你没有联盟，2你不是盟主，3没有请求
+    required            bool                    is_self                     =2;//是否返回给自己
+}
+
+message cs_family_get_info[id=13317]{
+}
+
+message sc_family_get_info[id=13318]{
+    required            int8                    result                      =1;//返回结果成功0,1没有联盟
+    required            p_family_info           family_info                 =2;//联盟信息
+}
+
+message cs_family_kick[id=13319]{
+    required            int32                   kick_role_id                =1;//踢掉角色ID
+}
+
+message sc_family_kick[id=13320]{
+    required            int8                    result                      =1;//返回提示结果成功为0,1你没有联盟，2不能踢自己，3你不是盟主，4没有此成员,5正在处理上一条请求
+    required            bool                    is_self                     =2;//是否返回给自己
+    required            p_family_info           family_info                 =3;//踢掉成员后新的family_info
+}
+
+message cs_family_create_consume[id=13321]{
+
+}
+
+message sc_family_create_consume[id=13322]{
+    required            int32                   need_coin                   =1;//需要银两
+    required            int32                   need_gold                   =2;//需要元宝
+}
+
+message cs_family_leave[id=13323]{
+
+}
+
+message sc_family_leave[id=13324]{
+    required            int8                    result                      =1;//返回结构成功0,1你没有联盟，2盟主不能离开，4没有此成员,5正在处理上一条请求
+    required            bool                    is_self                     =2;//是否返回给自己
+    required            p_family_info           family_info                 =3;//成员离开后新的family_info
+}
+
+message cs_family_change_notice[id=13325]{
+    required            string                  notice                      =1;//修改的公告
+}
+
+message sc_family_change_notice[id=13326]{
+    required            int8                    result                      =1;//返回结果成功0,1超过最大长度，2没有联盟，3你不是盟主
+    required            bool                    is_self                     =2;//是否返回给自己
+    required            string                  notice                      =3;//新的的公告
+}
+
+message cs_family_request_list[id=13327]{
+
+}
+
+message sc_family_request_list[id=13328]{
+    required            int8                    result                      =1;//返回提示，0成功,1没有联盟
+    repeated            p_family_request        request_list                =2;//申请列表
+}
+
+message sc_family_del_request[id=13329]{
+    required            int32                   role_id                     =1;//通知客户端删除指定角色的请求信息
+}
+
+
+
+

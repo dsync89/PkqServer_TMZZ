@@ -1,0 +1,157 @@
+//模块=mail
+//编号=11400
+
+
+//====================核心协议流程==================================
+//
+//      Client								Server
+// 请求邮件
+// #cs_hron_info  			===>>>>
+//					  		<<<<===		#sc_hron_info_stop
+// 
+//=================流程完成==================================
+		
+// 请求打开邮件列表
+message cs_mail_info[id=11401,route=mail_server]{
+	required		int8		type				=1;//请求打开的类型
+	// 1=> 系统邮件
+	// 2=> 私人邮件
+	// 3=> 联盟邮件
+	required		int64		clientTopMailUID	=2;//客户端保存的最新的邮件UID,初始化时发0
+}
+
+message sc_mail_info[id=11402]{
+	required		int8		result			=1;//请求操作结果
+	// 1=> 请求成功
+	// 2=> 请求失败-type非法
+	// 3=> 请求失败-最上面的邮件是最新的
+	required		int8		type			=2;//请求打开的类型
+	required		bool		isFuckData		=3;//Name For Joy!
+	// true = 客户端的该类型邮件数据可以抛弃，
+	// false = 已经将最新的邮件全部同步到客户端
+	repeated		p_mail		mailList		=4;//邮件列表
+	repeated		int8		newMailNum		=5;//新的三种类型邮件未读数量，[系统邮件未读数量、私人邮件未读数量、联盟邮件未读数量]
+}
+
+message	p_id_num[id=11403]{
+	required		int16		typeID			=1;//类型ID
+	required		int32		num				=2;//数量
+}
+
+message	p_mail_reward[id=11404]{
+	repeated		p_id_num	itemList		=1;//道具列表
+	repeated		p_id_num	gerList			=2;//武将列表		
+}
+
+message	p_mail[id=11405]{
+	required		int64		mailUID			=1;//邮件唯一ID
+	required		int8		mailType		=2;//邮件类型
+	// 1=> 系统消息
+	// 2=> 系统奖励
+	// 3=> 加好友申请
+	// 4=> 加联盟申请
+	// 5=> 私人邮件
+	// 6=> 联盟邮件
+	required		int32		senderID		=3;//邮件发送者的UID，0=系统发送的
+	required		string		senderName		=4;//发送者名字,如果本邮件是系统邮件，则此字段为空
+	required		string		content			=5;//内容
+	required		int32		time			=6;//发送时间(Unix时间戳)
+	required		int16		mailTemplateID	=7;//邮件模版ID
+	repeated		any			paramList		=8;//动态类型参数列表
+	repeated		p_mail_reward	mailReward	=9;//可领取奖励					
+}
+
+// 领取邮件奖励
+message	cs_mail_draw_reward[id=11406,route=mail_server]{
+	required		int64		mailUID			=1;//邮件唯一ID
+}
+
+message	sc_mail_draw_reward[id=11407]{
+	required		int8		result			=1;//结果
+	// 1=> 领取成功
+	// 2=> 领取失败-该邮件不存在、或者已被领过了
+}
+
+// 删除邮件
+message	cs_mail_delete[id=11408,route=mail_server]{
+	required		int64		mailUID			=1;//邮件唯一ID
+	required		int8		type			=2;//邮件的大类，1=系统，2=私人，3=联盟
+}
+
+message	sc_mail_delete[id=11409]{
+	required		int8		result			=1;//结果
+	// 1=> 删除成功
+	// 2=> 删除失败-该邮件不存在
+	// 3=> 删除失败-该邮件不能删除
+}
+
+// 新写一封邮件，请求发送
+message	cs_mail_new[id=11410,route=mail_server]{
+	required		int32		targetRoleID	=1;//目标玩家ID，如果玩家ID为0，则服务器根据玩家名字发送
+	required		string		targetRoleName	=2;//目标玩家名字，如果targetRoleID非0，则此字段服务器不使用
+	required		string		content			=3;//内容（包括了标题）
+}
+
+message	sc_mail_new[id=11411]{
+	required		int8		result			=1;//请求结果
+	// 1=> 发送成功
+	// 2=> 发送失败-邮件太长了
+	// 3=> 发送失败-你发送邮件频率太快了
+	// 4=> 发送失败-该玩家不存在
+	// 5=> 发送失败-邮件内容违反相关法律、法规
+}
+
+// 请求未读邮件个数
+message	cs_mail_unread_num[id=11420,route=mail_server]{
+}
+
+message	sc_mail_unread_num[id=11421]{
+	repeated		int8		newMailNum		=1;//新的三种类型邮件未读数量，[系统邮件未读数量、私人邮件未读数量、联盟邮件未读数量]
+}
+
+// 请求更多邮件
+message	cs_mail_more[id=11430,route=mail_server]{
+	required		int8		type				=1;//请求打开的类型
+	// 1=> 系统邮件
+	// 2=> 私人邮件
+	// 3=> 联盟邮件
+	required		int64		startMailUID		=2;//哪条邮件之后的更多邮件
+}
+
+message	sc_mail_more[id=11431]{
+	required		int8		result				=1;//请求结果
+	// 1=> 请求成功
+	// 2=> 请求失败-没有更多了，已经是最后一条了
+	// 3=> 请求失败-未知原因
+	required		int8		type				=2;//请求打开的类型
+	repeated		p_mail		mailList			=3;//邮件列表
+	repeated		int8		newMailNum			=4;//新的三种类型邮件未读数量，[系统邮件未读数量、私人邮件未读数量、联盟邮件未读数量]
+}
+
+// 同意好友申请
+message	cs_mail_agree_friend[id=11440, route=mail_server]{
+	required		int64			mailUID			=1;//邮件UID
+	// 1=> 好友申请邮件的UID	
+}
+
+message	sc_mail_agree_friend[id=11441]{
+	required		int8			result			=1;//请求结果
+	// 1=> 成功
+	// 2=> 失败-对方好友已满
+	// 3=> 失败-你的好友已满
+	// 4=> 失败-你没有这封好友申请邮件
+	// 5=> 失败-对方已经是你的好友
+	required		int64			mailUID			=2;//邮件UID
+}
+
+message cs_mail_del_spec_mail[id=11442, route=mail_server]{
+    required        int32           senderID        =1;//发送者的ID
+}
+
+message sc_mail_del_spec_mail[id=11443]{
+    repeated        int64           mailUIDList     =1;//邮件UIDList
+}
+
+
+
+

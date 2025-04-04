@@ -1,0 +1,51 @@
+message cs_road_info[id=14101]{
+
+}
+
+message sc_road_info[id=14102]{
+    required        int8            resetTimes      =1;//重置次数
+    required        int8            nowID           =2;//当前关卡ID，从101开始
+    required        int8            status          =3;//关卡状态，0未通关，1已通关，2已领取，只有最后一个关卡会出现已领取状态，其余关卡只要领取了就跳转为下一关卡未通关状态
+    required        int8            extID           =4;//神秘关卡ID，0表示当前无神秘关卡
+}
+
+message cs_road_reset[id=14103]{
+
+}
+
+message sc_road_reset[id=14104]{
+    required        int8            result          =1;//0成功，客户端自己重置界面及扣除次数, 1次数不足
+}
+
+message cs_road_fight[id=14105]{
+
+}
+
+message sc_road_fight[id=14106]{
+    required        int8                result          =1;//0成功,客户端需将当前关卡更新为已通关状态，1未激活，2通关
+    required        bool                isWin           =2;//
+    required        int8                extID           =3;//新的神秘关卡id
+    repeated        sc_fight_request    fightInfo       =4;//战斗播放信息
+    repeated        p_mail_reward       reward          =5;//返回成功则有一个，失败为空
+}
+
+message cs_road_fight_ext[id=14107]{
+
+}
+
+message sc_road_fight_ext[id=14108]{
+    required        int8                result          =1;//0成功，客户端需将神秘关卡清除，1未激活
+    required        bool                isWin           =2;//
+    repeated        sc_fight_request    fightInfo       =3;//战斗播放信息
+    repeated        p_mail_reward       reward          =4;//返回成功则有一个，失败为空
+}
+
+message cs_road_box[id=14109]{
+
+}
+
+message sc_road_box[id=14110]{
+    required        int8            result          =1;//0成功，客户端更新宝箱为已领取状态后，如有后置关卡，将后置关卡置为激活状态，1未激活，2已领取
+    repeated        p_mail_reward   reward          =2;//返回成功则有一个，失败为空
+}
+

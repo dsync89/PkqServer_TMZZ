@@ -1,0 +1,1 @@
+erl -pa ebin config config/app deps/ebin setting

@@ -1,0 +1,8 @@
+-define(FAMILY_TITLE_MEMBER, 0).
+-define(FAMILY_TITLE_OWNER, 1).
+
+%% 请求保护状态编号
+-define(PROTECT_FAMILY_CREATE, 1).
+-define(PROTECT_FAMILY_JOIN, 2).
+-define(PROTECT_FAMILY_LEAVE, 3).
+-define(PROTECT_FAMILY_KICK, 4).

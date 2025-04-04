@@ -1,0 +1,48 @@
+//模块=melee
+//编号=20300
+
+// 打开大乱斗界面，查看信息
+message cs_melee_info[id=20301]{
+}
+
+message sc_melee_info[id=20302]{
+	required	int8		leftTimes		=1;//剩余报名次数
+    required    int8    	melee_status    =2;//混斗状态（1: 未报名; 2: 已报名; 3: 战场已开始）
+	required	int32		countdown		=3;//倒计时 
+	required 	int32		miaomiao_score	=4;//喵喵积分
+	required	int32		pipi_score		=5;//皮卡丘积分
+	required	int16		self_score		=6;//贡献积分
+	required	int8		camp			=7;//所属阵营 (1:喵喵阵营； 2:皮卡丘阵营)
+	required	int8		cur_win_times	=8;//当前连胜次数
+}
+
+//报名
+message cs_melee_sign[id=20303]{
+}
+
+message sc_melee_sign[id=20304]{
+	required 	int8		result			=1 ;//报名结果（0:报名成功; 1:等级不足; 2:暂未开始报名; 3:报名次数已达限制）
+}
+
+%% 战斗
+message cs_melee_fight[id=20305]{
+}
+
+message sc_melee_fight[id=20306]{
+	required 		int8 				result			=1; // 0成功,1等级不够，2 功能未开放,3 等待复活中 4 未报名,5 没有找到对手,6 战斗结果异常
+	required		int64				tar_role_id		=2; // 目标玩家ID
+	required		string				tar_role_name	=3; // 目标玩家姓名
+	required		int16				add_score		=4; // 获得的积分
+	required		int32				miaomiao_score	=5; // 喵喵积分
+	required		int32				pipi_score		=6; // 皮卡丘积分
+	required        p_mail_reward       reward          =7; // 奖励
+	repeated		sc_fight_request 	fightInfo		=8; // 战斗录像，列表长度最多为1个
+	required		int8				cur_win_times	=9;	// 当前连胜次数
+}
+
+
+
+
+
+
+

@@ -1,0 +1,144 @@
+%% 各种资源的增加类型
+-define(MONEY_ADD_TYPE_BATTLE , 					1 ).%战役挑战关卡
+-define(MONEY_ADD_TYPE_BATTLE_PERFECT , 			2 ).%战役完美通关
+-define(MONEY_ADD_TYPE_ENCOUNTER_CHALLENGE , 		3 ).%遭遇战挑战关卡
+-define(MONEY_ADD_TYPE_HRON_CHALLENGE , 			4 ).%华容道挑战关卡
+-define(MONEY_ADD_TYPE_LEVEL_UP_GIFT , 				5 ).%升级礼包
+-define(MONEY_ADD_TYPE_EXCHANGE , 					6 ).%兑换活动
+-define(MONEY_ADD_TYPE_ENCOUNTER_COLLECT , 			7 ).%奇遇的探宝、征收获得
+-define(MONEY_ADD_TYPE_GIFT_CODE , 					8 ).%礼品码获得
+-define(MONEY_ADD_TYPE_INPUT_INVITE_CODE , 			9 ).%输入邀请码获得
+-define(MONEY_ADD_TYPE_FIRST_PAY, 					10).%首充奖励
+-define(MONEY_ADD_TYPE_ACTIVITY_DRAW, 				11).%活动获得
+-define(MONEY_ADD_TYPE_HULA_CHALLENGE, 				12).%虎牢关挑战获得
+-define(MONEY_ADD_TYPE_SHOP_BUY, 					13).%商店购买获得
+-define(MONEY_ADD_TYPE_SELL_GER, 					14).%出售武将获得
+-define(MONEY_ADD_TYPE_GM_CMD, 						15).%彩蛋GM命令获得
+-define(MONEY_ADD_TYPE_WEIBO_SHARE, 				16).%微博分享获得
+-define(MONEY_ADD_TYPE_SELL_ITEM, 					17).%出售道具获得
+-define(MONEY_ADD_TYPE_DRAW_CARD, 					18).%神兵天将获得
+-define(MONEY_ADD_TYPE_BUY_COIN, 					19).%招财获得
+-define(MONEY_ADD_TYPE_DAILY_TITLE_REWARD, 			20).%官爵工资获得
+-define(MONEY_ADD_TYPE_CON_LOGIN_REWARD, 			21).%连续登录奖励
+-define(MONEY_ADD_TYPE_HULA_ADD_BUFF, 				22).%虎牢关加buff获得
+-define(MONEY_ADD_TYPE_PVP_FIGHT, 					24).%争霸战斗获得
+-define(MONEY_ADD_TYPE_SHOP_SPIRITE_BOX,            25).%商店召唤精灵获得
+-define(MONEY_ADD_TYPE_BAG_BOX,                     26).%背包宝箱获得
+-define(MONEY_ADD_TYPE_MAIL_REWARD,                 27).%邮件获得奖励
+-define(MONEY_ADD_TYPE_ITEM_COMPOUND,               28).%道具碎片合成获得
+-define(MONEY_ADD_TYPE_CREATE_ROLE,                 30).%创角获得
+-define(MONEY_ADD_TYPE_DO_EXPLORE,                  31).%奇遇探索获得
+-define(MONEY_ADD_TYPE_NORMAL_PAY,					32).%一般充值获得
+-define(MONEY_ADD_TYPE_NANM_CHALLENGE,				33).%战南蛮获得
+-define(MONEY_ADD_TYPE_NANM_ADD_BUFF,				34).%战南蛮buff获得
+-define(MONEY_ADD_TYPE_ITEM_SPLIT,					35).%装备分解获得
+-define(MONEY_ADD_TYPE_Ger_SPLIT,					36).%将牌分解获得
+-define(MONEY_ADD_TYPE_ENCOUNTER_ALL_PASSED,		37).%遭遇战全部通过
+-define(MONEY_ADD_TYPE_CHALLENGEGOD,				38).%神将录挑战获得
+-define(MONEY_ADD_TYPE_HRON_SUCC,				    39).%华容道通关奖励
+-define(MONEY_ADD_TYPE_SIGN_EMPEROR,				40).%拜帝王获得,1,连续签到宝箱 0,每日签到宝箱
+-define(MONEY_ADD_TYPE_TREAHOUSE_BASEBOX,			41).%汉帝宝库保底宝箱
+-define(MONEY_ADD_TYPE_TREAHOUSE_EXPLORE,			42).%汉帝宝库探索获得
+-define(MONEY_ADD_TYPE_TREAHOUSE_RANKREWARD,		43).%汉帝宝库排名获得
+-define(MONEY_ADD_TYPE_FIRECRACKER,					44).%放爆竹获得的宝箱奖励
+-define(MONEY_ADD_TYPE_FIRECRACKER_COIN,			45).%放爆竹获得的银币奖励
+-define(MONEY_ADD_TYPE_FIRECRACKER_RANK,			46).%爆竹排行榜奖励
+-define(MONEY_ADD_TYPE_CROSS_SUPPORT_FAIL,			47).%跨服战支持失败返回
+-define(MONEY_ADD_TYPE_REBATE,						48).%红包返利
+-define(MONEY_ADD_TYPE_COMBINE_NORMAL_GER,			49).%固定合成卡牌获得
+-define(MONEY_ADD_TYPE_COMBINE_NORMAL_EQUIP,		50).%固定合成装备获得
+-define(MONEY_ADD_TYPE_COMBINE_RANDOM_GER,			51).%随机合成卡牌获得
+-define(MONEY_ADD_TYPE_COMBINE_RANDOM_EQUIP,		52).%随机合成装备获得
+-define(MONEY_ADD_TYPE_SHOP_EQUIP_BOX,				53).%商店祈祷装备获得
+-define(MONEY_ADD_TYPE_TASK_COMMIT,					54).%%任务提交获得
+-define(MONEY_ADD_TYPE_CREATE_FAMILY_FAIL,			55).%创建联盟失败获得
+-define(MONEY_ADD_TYPE_PAY_EXT_REWARD,				56).%充值额外奖励
+-define(MONEY_ADD_TYPE_HOMESTEAD_HARVEST,			57).%家园领取产出
+-define(MONEY_ADD_TYPE_HOMESTEAD_MATING,			58).%家园交配
+-define(MONEY_ADD_TYPE_HOMESTEAD_ADDENERGY,		    59).%家园充能
+-define(MONEY_ADD_TYPE_GER_DOWN_RANK,               60).%卡牌退化
+-define(MONEY_ADD_TYPE_3V3,                         61).%3v3
+-define(MONEY_ADD_TYPE_ALIEN_FIGHT,                 62).%异星战斗
+-define(MONEY_ADD_TYPE_SHOP_TREASURE_BUY,           63).%精灵宝库购买获得
+-define(MONEY_ADD_TYPE_REWARD_ONLINE,               64).%在线时长奖励礼包
+-define(MONEY_ADD_TYPE_REWARD_LEVEL,                65).%等级礼包
+-define(MONEY_ADD_TYPE_REWARD_DAYS,                 66).%连续登陆礼包
+-define(MONEY_ADD_TYPE_REWARD_DAYS_VIP,             67).%vip每日礼包
+-define(MONEY_ADD_TYPE_FESTIVAL,                    68).%节日活动
+-define(MONEY_ADD_TYPE_RULE,                        69).%秩序战场
+-define(MONEY_ADD_TYPE_ROAD,                        70).%训练师之路
+-define(MONEY_ADD_TYPE_HRON_RAIDS ,                 71).%华容道扫荡
+-define(MONEY_ADD_TYPE_COIN_BATTLE,                 72).%金币副本
+-define(MONEY_ADD_TYPE_MELEE,                       73).%大乱斗
+-define(MONEY_ADD_TYPE_DRAW_MONTH_CARD,             74).%月卡领取
+-define(MONEY_ADD_TYPE_FRIEND_PVP,                  75).%好友挑战
+
+%% 各种资源消耗的类型
+-define(MONEY_DEC_TYPE_GER_UP_RANK,  				1 ).%武将升品消耗
+-define(MONEY_DEC_TYPE_REFRESH_CARD,  				2 ).%刷新神兵天将消耗
+-define(MONEY_DEC_TYPE_EXCHANGE,  					3 ).%兑换活动消耗
+-define(MONEY_DEC_TYPE_ITEM_UP_RANK,  				4 ).%装备升品消耗
+-define(MONEY_DEC_TYPE_ITEM_MAX_REINFORCE,  		5 ).%装备最大强化消耗
+-define(MONEY_DEC_TYPE_ITEM_REINFORECE,  			6 ).%装备强化消耗
+-define(MONEY_DEC_TYPE_HULA_ADD_BUFF,  				7 ).%虎牢关加BUFF消耗
+-define(MONEY_DEC_TYPE_SHOP_BUY,  					8 ).%商店购买消耗
+-define(MONEY_DEC_TYPE_SHOP_SPIRIT_BOX,					9 ).%商店召唤精灵消耗
+-define(MONEY_DEC_TYPE_DRAW_CARD, 					10).%神兵天将消耗
+-define(MONEY_DEC_TYPE_ONEKEY_DRAW_CARD, 			11).%神兵天将一键全开消耗
+-define(MONEY_DEC_TYPE_EXPLORE_FREE, 				12).%解锁奇遇格子消耗
+-define(MONEY_DEC_TYPE_FORCE_COLLECT, 				13).%强行征收、强行探宝消耗
+-define(MONEY_DEC_TYPE_HULA_REBORN, 				14).%虎牢关复活消耗
+-define(MONEY_DEC_TYPE_HULA_OFFLINE, 				15).%虎牢关离线参与消耗
+-define(MONEY_DEC_TYPE_KING_BUY_BUFF, 				16).%皇权购买BUFF消耗
+-define(MONEY_DEC_TYPE_BUY_ENERGY,					17).%购买体力次数消耗
+-define(MONEY_DEC_TYPE_BUY_COIN,					18).%招财消耗
+-define(MONEY_DEC_TYPE_REFRESH_ENCOUNTER_SHOP,		19).%刷新奇遇商店消耗
+-define(MONEY_DEC_TYPE_SELL_GER,					20).%出售武将消耗
+-define(MONEY_DEC_TYPE_GER_EAT,						21).%武将吞噬升级消耗
+-define(MONEY_DEC_TYPE_ITEM_SELL,					22).%道具出售消耗
+-define(MONEY_DEC_TYPE_ITEM_COMPOUND,				23).%道具、将魂合成消耗
+-define(MONEY_DEC_TYPE_BAG_BOX,						24).%背包宝箱消耗
+-define(MONEY_DEC_TYPE_TREASURE_COMPOSE, 			26).%宝物合成需要
+-define(MONEY_DEC_TYPE_TREASURE_EAT,				27).%宝物升品消耗
+-define(MONEY_DEC_TYPE_NANM_ADD_BUFF, 				28).%战南蛮buff消耗
+-define(MONEY_DEC_TYPE_NANM_REBORN, 				29).%战南蛮复活消耗
+-define(MONEY_DEC_TYPE_NANM_OFFLINE, 				30).%战南蛮离线参与消耗
+-define(MONEY_DEC_TYPE_WORLD_TALK, 					31).%世界聊天消耗
+-define(MONEY_DEC_TYPE_UNTIE_LIEU, 					32).%解锁副将格子消耗
+-define(MONEY_DEC_TYPE_LIEU_LOCK, 					33).%锁定副将刷新消耗
+-define(MONEY_DEC_TYPE_LIEU_REFRESH,				34).%刷新副将格子消耗
+-define(MONEY_DEC_TYPE_CHALLENGEGOD,				35).%神将录挑战消耗
+-define(MONEY_DEC_TYPE_BET_EMPEROR,					36).%帝王争霸战下注消耗
+-define(MONEY_DEC_TYPE_FIRECRACKER, 				37).%放鞭炮消耗
+-define(MONEY_DEC_TYPE_TREAHOUSE_REFRESH, 			38).%汉帝宝库刷新消耗
+-define(MONEY_DEC_TYPE_TREAHOUSE_EXPLORE, 			39).%汉帝宝库探索消耗
+-define(MONEY_DEC_TYPE_CROSS_SUPPORT, 				40).%跨服战支持消耗
+-define(MONEY_DEC_TYPE_COMBINE_NORMAL_GER, 		    41).%固定合成卡牌消耗
+-define(MONEY_DEC_TYPE_COMBINE_NORMAL_EQUIP, 	    42).%固定合成装备消耗
+-define(MONEY_DEC_TYPE_COMBINE_RANDOM_GER, 			43).%随机合成卡牌消耗
+-define(MONEY_DEC_TYPE_COMBINE_RANDOM_EQUIP, 		44).%随机合成装备消耗
+-define(MONEY_DEC_TYPE_SHOP_EQUIP_BOX, 				45).%商店祈祷装备消耗
+-define(MONEY_DEC_TYPE_SELL_ITEM, 					46).%%出售道具消耗
+-define(MONEY_DEC_TYPE_CREATE_FAMILY, 				47).%创建联盟消耗
+-define(MONEY_DEC_TYPE_HOMESTEAD_UNLOCK, 			48).%家园机器解锁
+-define(MONEY_DEC_TYPE_HOMESTEAD_SEEDING, 			49).%家园播种
+-define(MONEY_DEC_TYPE_GER_DOWN_RANK, 				50).%卡牌退化
+-define(MONEY_DEC_TYPE_TEAM_PK_REFRESH, 		    51).%3v3刷新
+-define(MONEY_DEC_TYPE_ALIEN_FIGHT, 			    52).%异星战斗
+-define(MONEY_DEC_TYPE_ALIEN_RESET, 			    53).%异星重置
+-define(MONEY_DEC_TYPE_ALIEN_GUESS, 			    54).%异星竞猜
+-define(MONEY_DEC_TYPE_RACE_GUESS, 				    55).%华丽竞猜
+-define(MONEY_DEC_TYPE_ALIEN_BUY_TIMES, 		    56).%异星购买次数
+-define(MONEY_DEC_TYPE_HRON_BUY, 					57).%道馆购买
+-define(MONEY_DEC_TYPE_58, 			                58).%
+-define(MONEY_DEC_TYPE_SHOP_TREASURE_REFRESH, 	    59).%精灵宝库刷新
+-define(MONEY_DEC_TYPE_SHOP_TREASURE_BUY_ITEM, 		60).%精灵宝库购买物品
+-define(MONEY_DEC_TYPE_SHOP_TREASURE_BUY_GER, 		61).%精灵宝库购买卡牌
+-define(MONEY_DEC_TYPE_FESTIVAL, 				    62).%节日活动
+-define(MONEY_DEC_TYPE_CHANGE_NAME, 			    63).%更改名字
+-define(MONEY_DEC_TYPE_GUARD_REFRESH, 			    64).%守护精灵洗练
+-define(MONEY_DEC_TYPE_BUY_MONTH_CARD, 				65).%购买月卡
+-define(MONEY_DEC_TYPE_66, 							66).%
+-define(MONEY_DEC_TYPE_67, 							67).%
+-define(MONEY_DEC_TYPE_68, 							68).%
+-define(MONEY_DEC_TYPE_69, 							69).%

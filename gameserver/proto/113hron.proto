@@ -1,0 +1,74 @@
+//模块=hron
+//编号=11300
+
+
+//=================流程完成==================================
+		
+// 道馆界面信息
+message cs_hron_info[id=11301]{
+}
+
+// 道馆界面信息返回
+message sc_hron_info[id=11302]{
+	required       int16           curDungeonNum	    = 1;//当前是挑战第几关
+	required       int16           attackAdd		    = 2;//当前攻击增加百分比
+	required       int16           hpAdd			    = 3;//当前血量增加百分比
+	required       int16           dungeonID		    = 4;//关卡ID
+	required       int8            challengeTimes       = 5;//生命值
+    required       bool            isOpen               = 6;//是否开启
+    required       int32           nextTime             = 7;//下次切换状态的时间
+    required       int8            coinBuyTimes         = 8;//金币购买次数
+    required       int8            goldBuyTimes         = 9;//钻石购买次数
+    required       int16           maxDungeonNum        = 10;//挑战最高关卡
+}
+
+
+// 请求购买加成
+message cs_hron_buy[id=11303]{
+	required	int8			type		=1;//类型，1金币购买，2钻石购买
+}
+
+message	 sc_hron_buy[id=11304]{
+	required	int8			result		=1;//请求结果
+	// 1=> 购买成功
+	// 2=> 购买失败-金币不足
+	// 3=> 购买失败-钻石不足
+	// 4=> 购买失败-活动已经结束了
+	// 5=> 购买失败-你已经结束挑战了
+	// 6=> 购买失败-你已经购买过了
+	required	int16			attackAdd	=2;//购买成功时此值有效，当前攻击增加百分比
+	required	int16			hpAdd		=3;//购买成功时此值有效，当前血量增加百分比
+}
+
+// 请求战斗
+message	 cs_hron_fight[id=11305]{
+}
+
+
+message sc_hron_fight[id=11306]{
+	required   int8                result		    =1;//请求战斗结果
+	// 1 => 战斗胜利
+	// 2 => 战斗失败
+	// 3 => 请求失败-活动结束了
+	// 4 => 请求失败-你今天挑战次数没有了
+	required   int16               dungeonID       =2;//新的关卡ID
+	required   int16               curDungeonNum   =3;//新的第几关
+	required   int8                challengeTimes  =4;//新的剩余挑战次数
+	repeated   sc_fight_request    fightInfo	   =5;//战斗具体信息
+	repeated   p_reward            rewardInfo	   =6;//奖励信息
+}
+
+message cs_hron_raids[id=11307]{
+}
+
+message sc_hron_raids[id=11308]{
+    required        int8            result      =1;
+    // 0 => 扫荡成功
+    // 1 => 无可扫荡关卡
+    // 2 => 等级不足
+    // 3 => vip等级不足
+    // 4 => 活动结束了
+    // 255 => 支付参数错误
+    required        int16           dungeonID   =2;//新的关卡ID
+    repeated        p_reward        reward      =3;//战斗奖励
+}

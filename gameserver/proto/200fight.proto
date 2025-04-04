@@ -1,0 +1,46 @@
+//模块号：
+//登录=20000
+
+
+//========================战斗========================
+
+//请求战斗
+message cs_fight_request[id=20001]{
+}
+
+//战斗结果
+message sc_fight_request[id=20002]{
+	repeated 	p_fighter		fighterList		=1;//战斗单位列表
+	repeated	p_action		actionList		=2;//战斗序列
+	required	bool			result			=3;//战斗是否胜利
+}
+
+//参与战斗的单位的数据结构
+message p_fighter[id=20003]{
+	required	int64			gerID			=1;//武将ID
+	required	int16			gerTypeID		=2;//武将模版ID
+	required	int8			gerPos			=3;//武将位置，gerPos*=gerCamp
+	required	int64			gerHp			=4;//武将当前血量
+	required	int64			gerHpMax		=5;//武将血量上限
+	required	int32			gerSp			=6;//武将当前怒气
+	required	int8			gerQuality		=7;//武将品阶
+	required	int16			gerLevel		=8;//武将等级
+}
+
+//每个攻击动作的数据结构
+message p_action[id=20004]{
+	required	int8			gerPos			=1;//武将站位
+	required	int8			actionID		=2;//动作ID
+	repeated	int8			targetPos		=3;//目标位置列表
+	required	int8			addSp			=4;//增加的怒气，如果是扣怒气，则为负值
+	required	int32			addHp			=5;//增加的血量，如果是扣血量，则为负值
+	required	int8			state			=6;//第一位表示是否暴击，第二位表示是否击晕
+}
+
+/*
+	普通攻击 #p_action{gerPos=1,actionID=125,targetPos=[-1],newSp=50,newHp=100,isCrit=true}
+	范围攻击 #p_action{gerPos=1,actionID=125,targetPos=[-1],newSp=50,newHp=100,isCrit=true}
+  	吸血	  #p_action{gerPos=1,actionID=125,targetPos=[-1],newSp=50,newHp=100,isCrit=false}
+  	反弹	  #p_action{gerPos=1,actionID=125,targetPos=[-1],newSp=50,newHp=50,isCrit=true}
+*/
+

@@ -1,0 +1,26 @@
+充值服开服说明
+
+1.编译全部代码，打包拷贝到服务器
+
+2.解压到指定路径
+
+3.修改配置，server_list.config需要与帐号服的配置保持一致，如果修改了帐号服的server_list.config，务必记得同步修改到这里的server_list.config，
+注意，这里的游戏服IP填写内网IP，而帐号服那边是填外网IP
+common.config修改详细说明
+
+%% 数据库连接配置
+%% {database, {数据库IP,端口,用户名,密码,数据库名称}}
+{database, {"localhost",3306,"root","test","pm_platform_pay",10}}.
+
+%% 充值服的开放端口及内网IP
+{pay_port, {38081, "127.0.0.1"}}.
+
+%% 充值服务器的全局进程名称，
+配置start.sh的节点名称时需要与这里一致
+{pay_server, pm_pay_server}.
+
+4.创建数据库，初始化数据库，注意要与common.config配置的一致
+
+5.修改start.sh remsh.sh，注意节点取名，与common.config中的pay_server配置选项一致
+
+6.启动服务器，查看充值服进程，确认启动成功

@@ -1,0 +1,72 @@
+
+message cs_rule_info[id=13801]{
+
+}
+
+message sc_rule_info[id=13802]{
+	required		int32			score				  = 1;//我的分数
+	required		int32			rank				  = 2;//我的排名
+	required		int16			winTimes			  = 3;//胜利场数
+	required		int16			fightTimes			  = 4;//战斗场数
+	required		int16			winConTimes			  = 5;//连胜场数
+	required		int16			winConMaxTimes		  = 6;//最大连胜场数
+    required        p_rule_fighter  tarFighter            = 7;//对手信息
+    repeated        p_hist          list                  = 8;//战报，也是战斗历程的数据
+}
+
+message cs_rule_rank[id=13803,route=rule_server]{
+
+}
+
+message sc_rule_rank[id=13804]{
+    repeated        p_rule_fighter  list                  = 1;        
+}
+
+message cs_rule_last_rank[id=13805,route=rule_server]{
+
+}
+
+message sc_rule_last_rank[id=13806]{
+    repeated        p_rule_fighter  list                  = 1;
+}
+
+message cs_rule_fight[id=13807,route=rule_server]{
+}
+
+message sc_rule_fight[id=13808]{
+    required        int8                result              = 1;//0成功,1等级不够，2次数不足,3功能未开放,4获取自己信息失败,5获取对手战斗信息失败,6战斗结果异常,7更新排行榜异常
+    required        bool                isWin               = 2;
+    required        string              tarRoleName         = 3;
+    required        int32               newScore            = 4;
+    required        int32               rank                = 5;//我的排名
+    required        int16               winTimes            = 6;//胜利场数
+    required        int16               fightTimes          = 7;//战斗场数
+    required        int16               winConTimes         = 8;//连胜场数
+    required        int16               winConMaxTimes      = 9;//最大连胜场数
+    required        p_mail_reward       reward              = 10;//奖励
+    required        p_rule_fighter      tarFighter          = 11;//新的对手信息
+    repeated        sc_fight_request    fightInfo           = 12;//战斗录像，列表长度最多为1个
+}
+
+message p_rule_fighter[id=13809]{
+    required        int32           roleID                = 1;//角色ID
+    required        int64           fightPower            = 2;//战斗力
+    required        bool            isMale                = 3;//性别
+    required        int8            title                 = 4;//称号
+    required        int32           head                  = 5;//头像
+    required        int16           level                 = 6;//等级
+    required        string          roleName              = 7;//名字
+    required        int32           score                 = 8;//积分
+    required        int32           rank                  = 9;//排名
+    required        int16           winTimes              = 10;//胜利场数
+    required        int16           fightTimes            = 11;//战斗场数
+    required        int16           winConTimes           = 12;//连胜场数
+    required        int16           winConMaxTimes        = 13;//最大连胜场数
+}
+
+message cs_rule_leave[id=13810,route=rule_server]{
+
+}
+
+
+

@@ -1,0 +1,95 @@
+//模块=box
+//编号=12000
+
+
+//====================核心协议流程==================================
+//
+//      Client								Server
+
+//=================流程完成==================================
+
+// 道具开宝箱，如果开宝箱成功，前端自行同步道具的扣除
+message	 cs_box_item[id=12001]{
+	required		int16		itemTypeID			=1;//道具模版ID
+	required		int8		num					=2;//开启数量
+}
+
+message	 sc_box_item[id=12002]{
+	required		int8		result				=1;//开宝箱结果
+	// 1=> 成功
+	// 2=> 失败-道具不足
+	// 3=> 失败-未知原因
+	repeated		p_reward_view	reward			=2;//奖励信息
+	required		int16		itemTypeID			=3;//道具模版ID
+	required       int8        num                 =2;//开启数量
+}
+
+// 商店开宝箱
+message	 cs_box_shop[id=12003]{
+	required		int32		tab				=1;//24001=召唤精灵    24002=祈祷装备
+	required		int8		type				=2;//0:道具抽取  1:钻石抽1次  2:钻石抽取10次
+}
+
+message sc_box_shop[id=12004]{
+	required		int8		result				=1;//请求结果
+	// 1=> 成功
+	// 2=> 失败-元宝不足
+	// 3=> 失败-材料不足
+	// 4=> 失败-未知原因
+	repeated		p_reward_view2	reward			=2;//奖励信息
+}
+
+// 奖励
+message	 p_reward_view[id=12005]{
+	required		int8			type			=1;//类型
+	// 1=> 银两
+	// 2=> 元宝
+	// 3=> 声望
+	// 4=> 主公经验
+	// 5=> 武将经验
+	// 6=> 道具
+	// 7=> 武将
+	required		int32			value			=2;//值，当类型为道具和武将时，此字段前16位表示模版ID，后16位表示数量
+}
+
+// 奖励2
+message p_reward_view2[id=12006]{
+	required		int8			type			=1;//类型 1=>item 2=>ger
+	required		int16			typeID			=2;//模版ID
+	required		int16			num				=3;//数量,抽卡时同时也表示暴击倍数
+}
+
+//商店开宝箱信息
+message cs_box_shop_info[id=12007]{
+}
+
+message sc_box_shop_info[id=12008]{
+	repeated		p_shop_box_info			info		=1;//商店售卖信息
+	required        int32                   stopTime    =2;//抽卡暴击活动结束时间
+}
+
+message p_shop_box_info[id=12009]{
+	required		int16			itemTypeID		=1;//道具id
+	required		int32			valueOne		=2;//单次价格
+	required		int32			valueTen		=3;//10次价格
+	required		int8				isOpenActivity	=4;//是否开启打折活动
+	required		int32			discount				=5;//打折信息(1到100之间)
+	required		int32			endtime				=6;//活动结束时间戳
+}
+
+message p_reward_view3[id=12010]{
+	required		int8			type			=1;//类型 1=>item 2=>ger
+	required		int16			typeID			=2;//模版ID
+	required		int32			num				=3;//数量
+}
+
+message cs_box_get_spirit_equip_count[id=12011]{
+}
+message sc_box_get_spirit_equip_count[id=12012]{
+	required	int32		count1 = 1;
+	required	int32		count2 = 2;
+	required	int32		needItemTypeID1=3;
+	required	int32		needNum1=4;
+	required	int32		needItemTypeID2=5;
+	required	int32		needNum2=6;
+}

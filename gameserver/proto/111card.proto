@@ -1,0 +1,96 @@
+//模块=card
+//编号=11100
+
+
+
+//====================协议流程==================================
+//
+//      Client								Server
+// 界面信息
+// #cs_card_get_list  		===>>>>
+//					  		<<<<===		#sc_card_get_list
+// 抽取卡牌
+// #cs_card_draw 			===>>>>		
+//					  		<<<<==		#sc_card_draw
+//
+// 刷新卡牌、放弃卡牌、重置卡牌
+// #cs_card_refresh			===>>>>		
+//					  		<<<<==		#sc_card_refresh
+//
+//
+//====================流程完成==================================
+
+//请求登录奖励
+message		cs_card_get_list[id=11101]{
+}
+
+message		sc_card_get_list[id=11102]{
+     required       bool                    isOpen              =1;//是否开放
+	 repeated		p_opened_card			openedCardList		=2;//已抽取的卡牌列表
+	 repeated		p_card					cardList			=3;//等待抽取的卡牌列表
+	 repeated       int8                    needNumList         =4;//数组，抽第N次需要的个数就取数组的第N个元素的值
+	 required       int8                    goldPrice           =5;//一个道具的宝石价格
+}
+
+message 	p_opened_card[id=11103]{
+	required		int8					pos					=1;//记录上次被翻出来时，卡片所在的位置,位置定义由客户端自行决定
+	required		int8					type				=2;//卡牌类型
+	required		int32					value				=3;//卡牌数值
+	// type=1 => 武将ID
+	// type=2 => 道具ID
+	// type=3 => 元宝数量
+	// type=4 => 银两数量
+	// type=5 => 声望数量
+}
+
+message		p_card[id=11104]{
+	required		int8					type				=1;//卡牌类型
+	required		int32					value				=2;//卡牌数值
+	// type=1 => 武将ID
+	// type=2 => 道具ID
+	// type=3 => 元宝数量
+	// type=4 => 银两数量
+	// type=5 => 声望数量
+}
+
+// 抽取卡牌
+message		cs_card_draw[id=11105]{
+	required		int8					pos					=1;//请求的卡片抽取的位置
+}
+
+message		sc_card_draw[id=11106]{
+	required		int8			result			=1;//抽取结果，如果抽取成功，前端自行删除点将令
+	// 1=> 抽取成功
+	// 2=> 抽取失败-点将令或者元宝不足
+	// 3=> 抽取失败-卡牌已领完了，还领个毛啊
+	// 4=> 抽取失败-未知错误
+	required		int8			pos				=2;//请求的卡片抽取未知
+	repeated		p_card			card			=3;//如果抽到，则列表长度为1个，如果没抽到，则列表长度为0
+}
+
+
+// 刷新卡牌、重置卡牌、放弃卡牌
+message		cs_card_refresh[id=11107]{
+}
+
+message		sc_card_refresh[id=11108]{
+	required		int8			result			=1;//刷新结果
+	// 1=> 刷新成功
+	// 2=> 刷新失败-银两不足
+	// 3=> 刷新失败-你刷得太快了
+	// 4=> 刷新失败-未知错误
+	repeated		p_card			cardList		=2;//新的等待抽取的卡牌列表
+}
+
+// 一键翻牌
+message		cs_card_onekey[id=11120]{
+}
+	
+message		sc_card_onekey[id=11121]{
+	required		int8			result			=1;//抽取结果，如果抽取成功，前端自行删除点将令
+	// 1=> 抽取成功
+	// 2=> 抽取失败-点将令或者元宝不足
+	// 3=> 抽取失败-卡牌已领完了，还领个毛啊
+	// 4=> 抽取失败-未知错误
+	repeated		p_opened_card	card			=2;//开启的卡牌列表
+}
