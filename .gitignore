@@ -1,4 +1,7 @@
 *.beam
 *.log
-*.dmp
+*.dump
 *.tar.gz
+gameserver/log/*
+PlatformPay/log/*
+Platform/log/*
